@@ -1,24 +1,51 @@
 import React from "react";
-import logo from "./logo.svg";
-import { sayHello } from "@codeshare/common";
-import "./App.css";
+import { Provider } from "react-redux";
+import store from "@codeshare/common/models/store";
+import {
+  TodoInputController,
+  TodoListController,
+  VisibilityFiltersController,
+} from "@codeshare/common/controllers";
+import { Todo, TodoInput, VisibilityFilters } from "./components";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>{sayHello()}</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <TodoInputController
+        render={({ inputValue, updateInput, addTodo }) => (
+          <TodoInput
+            updateInput={updateInput}
+            inputValue={inputValue}
+            addTodo={addTodo}
+          />
+        )}
+      />
+      <TodoListController
+        render={({ todos, toggleTodo }) => (
+          <ul style={{ listStyle: "" }}>
+            {todos && todos.length
+              ? todos.map(({ content, completed, id }) => (
+                  <Todo
+                    key={id}
+                    content={content}
+                    completed={completed}
+                    id={id}
+                    toggleTodo={toggleTodo}
+                  />
+                ))
+              : "No todos, yay! ✨"}
+          </ul>
+        )}
+      />
+      <VisibilityFiltersController
+        render={({ setFilter, activeFilter }) => (
+          <VisibilityFilters
+            setFilter={setFilter}
+            activeFilter={activeFilter}
+          />
+        )}
+      />
+    </Provider>
   );
 }
 

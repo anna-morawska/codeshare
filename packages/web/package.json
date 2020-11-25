@@ -11,7 +11,12 @@
     "react-dom": "16.13.1",
     "react-scripts": "4.0.1",
     "web-vitals": "^0.2.4",
+    "react-redux": "7.2.2",
+    "redux": "4.0.5",
     "@codeshare/common": "1.0.0"
+  },
+  "devDependencies": {
+    "redux-devtools-extension": "^2.13.8"
   },
   "scripts": {
     "start": "react-scripts start",
